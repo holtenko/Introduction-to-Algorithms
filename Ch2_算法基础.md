@@ -75,19 +75,42 @@ public int[] insertionSort(int[] nums) {
 
 ```java
 public int[] insertionSort(int[] nums, int v) {
-	for (int j = 0; j < nums.length; j++) {
-		int key = nums[j];
+	for (int i = 0; i < nums.length; i++) {
+		int key = nums[i];
     if ( key == v ){
-			return j;
+			return i;
 		}
 	}
 	return null;
 }
 ```
 
+循环不变式为$A[0...i-1]$中的值均不等于 $v$。
+
+- 初始化: 初始情况 $i=0$, $A[0...i-1]$ 为空，自然均不等于 $v$，正确；
+- 保持：循环过程中，如果 $A[i]=v$ 则直接返回 $i$，否则继续遍历，$A[0...i]$ 仍均不等于 $v$，不变式正确；
+- 终止：当$i=A.length-1=n-1$时循环结束，因为$i=i+1$，因此结束时$i=n$，$A[0...n-1]$中的值均不等于$v$，返回`null`，因此算法正确；
+
 ###### 2.1-4 考虑把两个 n 位二进制整数加起来的问题，这两个整数分别存储在两个 n 元数组 A 和 B 中。这两个整数的和应按二进制形式存储在一个(n+1)元数组C中。请给出该问题的形式化描述，并写出伪代码。
 
+输入: 数组$A=[a_1, a_2, ..., a_n]$ 和 数组$B=[b_1, b_2, ..., b_n]$ ，其中每个元素均为 0 或 1，长度均为$n$。
 
+输出: 数组$C=[c_1, c_2, ..., c_{n+1}]$， 其中每个元素均为 0 或 1，长度为$n+1$。
+
+```java
+public int[] addBinary(int[] A, int[] B) {
+    int n = A.length;
+    int[] C = new int[n + 1];
+    int carry = 0;
+    for (int i = 0; i < n; i++) {
+        int sum = A[i] + B[i] + carry;
+        C[i] = sum % 2;
+        carry = sum / 2;
+    }
+    C[n]=carry;
+    return C;
+}
+```
 
 
 
